@@ -1,0 +1,4 @@
+%h1 Search Rubygems
+= form_tag url_for(action: :create) do
+  = text_field_tag :query
+  = submit_tag :search

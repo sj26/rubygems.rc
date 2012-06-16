@@ -11,6 +11,26 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 0) do
+ActiveRecord::Schema.define(:version => 20120616010923) do
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "versions", :force => true do |t|
+    t.integer  "project_id",                   :null => false
+    t.string   "version"
+    t.string   "platform"
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.integer  "version_order", :default => 0, :null => false
+    t.text     "summary"
+    t.text     "description"
+  end
+
+  add_index "versions", ["project_id", "version"], :name => "index_versions_on_project_id_and_version", :unique => true
+  add_index "versions", ["project_id", "version_order", "created_at"], :name => "index_versions_on_project_id_and_version_order_and_created_at"
 
 end
