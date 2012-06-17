@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
 
   has_many :versions, dependent: :destroy
 
-  delegate :summary, :description, to: "versions.last"
+  delegate :summary, :description, to: :latest_version
 
   extend Texticle
 
