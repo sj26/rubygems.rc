@@ -1,13 +1,21 @@
 !!!
-%html
+%html{lang: "en"}
   %head
     %title Rubygems
     = stylesheet_link_tag "application", media: "all"
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    %header
-      = link_to_unless_current "Rubygems", root_path
-    = yield
-    %footer
-      Made by #{mail_to "sj26@sj26.com", "Samuel Cochran"} at Railscamp XI
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          = link_to "Rubygems", root_path, class: :brand
+          = form_tag projects_path, method: :get, class: "navbar-form pull-right form-search" do
+            = search_field_tag :search, params[:search], class: "search-query", placeholder: "Search"
+
+    .container
+      = yield
+
+    %footer.footer
+      .container
+        Made by #{mail_to "sj26@sj26.com", "Samuel Cochran"} at Railscamp XI
