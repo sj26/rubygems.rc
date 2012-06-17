@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/sj26/nestive
+  revision: c597616808713c380f326603a701959d3cbd8c61
+  specs:
+    nestive (0.1.0)
+      rails (~> 3.0)
+
 PATH
   remote: vendor/linguist
   specs:
@@ -158,6 +165,7 @@ DEPENDENCIES
   haml-rails
   jquery-rails
   linguist!
+  nestive!
   org-ruby
   pg
   rails (~> 3.2.5)
