@@ -20,7 +20,7 @@
 - else
   - @gem_file.data_file(@path) do |file|
     - if GitHub::Markup.can_render? @entry.name
-      %article.content{class: file.language.default_alias_name}
+      %article.content{class: file.language.try(:default_alias_name)}
         = raw GitHub::Markup.render @entry.name, file.read
 
     - elsif file.image?
@@ -28,5 +28,5 @@
         = image_tag raw_version_path(@version, @path)
 
     - else
-      %article.file{class: file.language.default_alias_name}
+      %article.file{class: file.language.try(:default_alias_name)}
         = raw file.colorize
