@@ -1,0 +1,17 @@
+%h1= @version
+
+%p= @version.summary
+= simple_format @version.description
+
+%h2 Dependencies
+%ul
+  - @gem_file.metadata.dependencies.each do |dependency|
+    %li
+      = link_to dependency.name, project_path(dependency.name)
+      = dependency.requirement
+
+- if @gem_file.metadata.development_dependencies.present?
+  %h2 Development Dependencies
+  %ul
+  - @gem_file.metadata.development_dependencies.each do |dependency|
+    %li= link_to dependency.name, project_path(dependency.name)
