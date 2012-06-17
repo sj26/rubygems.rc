@@ -1,13 +1,21 @@
-%h1
-  %ul
-    %li= link_to @version, browse_version_path(@version)
-    - subpaths_to @path do |component, subpath|
-      %li= link_to_unless_current component, browse_version_path(@version, subpath)
+%ul.breadcrumb.pull-left
+  %li
+    = link_to "Root", browse_version_path(@version)
+    - unless @path.blank?
+      %span.divider /
+  - subpaths_to @path do |component, subpath|
+    - if current_page? browse_version_path(@version, subpath.presence)
+      %li.active
+        = component
+    - else
+      %li
+        = link_to_unless_current component, browse_version_path(@version, subpath.presence)
+        %span.divider /
 
 - # TODO: These renderings and listings should be cached
 
 - if @entry.is_a? Hash
-  %table
+  %table.table.table-bordered.table-striped.clearfix
     %thead
       %th Name
       %th Size
@@ -18,12 +26,11 @@
           %td= number_to_human_size entry.size if entry.respond_to? :size
 
 - else
-  %nav
-    %ul
-      %li= link_to "Raw", raw_version_path(@version, @path)
+  %nav.btn-group.pull-right
+    = link_to "Raw", raw_version_path(@version, @path), class: "btn"
 
   - @gem_file.data_file(@path) do |file|
-    %article.content{class: [file.language.try(:type), file.language.try(:default_alias_name)]}
+    %article.content.clearfix{class: [file.language.try(:type), file.language.try(:default_alias_name)]}
       - if GitHub::Markup.can_render? @entry.name
         ~ raw GitHub::Markup.render @entry.name, file.read
 
