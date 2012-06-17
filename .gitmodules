@@ -1,3 +1,6 @@
 [submodule "vendor/linguist"]
 	path = vendor/linguist
 	url = https://github.com/github/linguist
+[submodule "vendor/nestive"]
+	path = vendor/nestive
+	url = https://github.com/sj26/nestive.git

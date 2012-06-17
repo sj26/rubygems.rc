@@ -32,4 +32,4 @@ end
 # Presentational stuff
 gem 'jquery-rails'
 gem 'haml-rails'
-gem 'nestive', git: 'https://github.com/sj26/nestive'
+gem 'nestive', path: 'vendor/nestive'
