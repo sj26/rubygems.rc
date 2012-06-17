@@ -23,6 +23,7 @@ gem 'linguist', path: 'vendor/linguist'
 # Asset-online gems
 group :assets do
   gem 'sass-rails'
+  gem 'bootstrap-sass'
   gem 'coffee-rails'
   gem 'uglifier'
   gem 'yui-compressor'
