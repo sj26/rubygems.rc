@@ -1,4 +1,7 @@
 %h1= @project
 = simple_format @project.summary
 = simple_format @project.description
-= render @project.versions
+.row
+  .span6
+    %h2 Versions
+    %ul.unstyled= render @project.versions

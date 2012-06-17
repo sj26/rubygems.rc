@@ -1,5 +1,3 @@
-%h1= @version
-
 %p= @version.summary
 
 = simple_format @version.description if @version.description
@@ -35,8 +33,8 @@
             = dependency.requirement
 
   - if @gem_file.metadata.development_dependencies.present?
-    .span6
-      %h2 Development Dependencies
+    .span4
+      %h2 Dev Dependencies
       %ul
       - @gem_file.metadata.development_dependencies.each do |dependency|
         %li= link_to dependency.name, project_path(dependency.name)

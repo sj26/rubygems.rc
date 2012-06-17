@@ -1,6 +1,11 @@
-%article[version]
-  %h1= link_to version, version
-  %nav
-    %ul
-      %li= link_to "Download", version_path(version, format: "gem")
-      %li= link_to "Browse", browse_version_path(version)
+%li[version]
+  .row
+    = link_to version, class: "span3" do
+      %span.version= version.version
+      - unless version.platform == "ruby"
+        %span.platform= version.platform
+
+    .span3{style: "text-align: right"}
+      .btn-group{style: "display: inline-block; vertical-align: middle"}
+        = link_to "Download", version_path(version, format: "gem"), class: "btn btn-mini"
+        = link_to "Browse", browse_version_path(version), class: "btn btn-mini"
