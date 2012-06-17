@@ -111,6 +111,7 @@ GEM
     uglifier (1.2.4)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    will_paginate (3.0.3)
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
 
@@ -126,4 +127,5 @@ DEPENDENCIES
   sass-rails
   texticle
   uglifier
+  will_paginate
   yui-compressor

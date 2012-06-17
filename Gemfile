@@ -15,3 +15,4 @@ gem 'jquery-rails'
 gem 'haml-rails'
 
 gem 'texticle'
+gem 'will_paginate'
