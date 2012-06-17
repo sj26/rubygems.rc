@@ -1,0 +1,6 @@
+%h1
+  Projects
+  - if search?
+    matching &ldquo;#{params[:search]}&rdquo;
+= render @projects
+= will_paginate @projects

@@ -1,0 +1,6 @@
+%h1 Browse #{@version}
+%h2= @path
+- if @entry.is_a? Hash
+  %ul
+    - @entry.each do |name, entry|
+      %li= link_to name, browse_version_path(@version, File.join([params[:path], name].compact))

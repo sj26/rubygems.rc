@@ -1,2 +1,6 @@
 %article[version]
-  %h1= link_to version, download_version_path(version)
+  %h1= version
+  %nav
+    %ul
+      %li= link_to "Download", version_path(version, format: "gem")
+      %li= link_to "Browse", browse_version_path(version)

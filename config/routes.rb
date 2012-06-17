@@ -1,6 +1,9 @@
 RubygemsOrg::Application.routes.draw do
   root to: "search#new"
-  match :search, via: [:get, :post], to: "search#create"
-  resources :projects, only: :show
-  get "gems/:id.gem", to: "versions#download", as: :download_version
+
+  resources :projects, only: [:show, :index]
+
+  resources :versions, path: :gems, only: [:show], constraints: {id: %r{[^/]+}} do
+    get :browse, path: "browse(/*path)", on: :member
+  end
 end

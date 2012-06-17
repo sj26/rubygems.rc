@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616010923) do
+ActiveRecord::Schema.define(:version => 20120616044224) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(:version => 20120616010923) do
     t.text     "description"
   end
 
-  add_index "versions", ["project_id", "version"], :name => "index_versions_on_project_id_and_version", :unique => true
+  add_index "versions", ["project_id", "version", "platform"], :name => "index_versions_on_project_id_and_version_and_platform", :unique => true
   add_index "versions", ["project_id", "version_order", "created_at"], :name => "index_versions_on_project_id_and_version_order_and_created_at"
 
 end
