@@ -3,7 +3,7 @@ RubygemsOrg::Application.routes.draw do
 
   resources :projects, only: [:show, :index]
 
-  resources :versions, path: :gems, only: [:show], constraints: {id: %r{[^/]+}} do
-    get :browse, path: "browse(/*path)", on: :member
+  resources :versions, path: :gems, only: [:show], constraints: {id: /[^\/]+/} do
+    get :browse, path: "browse(/*path)", on: :member, constraints: {format: false}
   end
 end

@@ -61,10 +61,13 @@ class GemFile
   def data_file path, &block
     data_tar do |data_tar|
       data_tar.each do |entry|
-        yield entry if entry.full_name == path
+        if entry.full_name == path
+          yield entry
+          return
+        end
       end
     end
-    raise "file not found"
+    raise "file #{path.inspect} not found"
   end
 
   def to_hash

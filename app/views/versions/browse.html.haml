@@ -1,6 +1,20 @@
-%h1 Browse #{@version}
-%h2= @path
+%h1
+  %ul
+    %li= link_to @version, browse_version_path(@version)
+    - subpaths_to @path do |component, subpath|
+      %li= link_to_unless_current component, browse_version_path(@version, subpath)
+
 - if @entry.is_a? Hash
   %ul
     - @entry.each do |name, entry|
       %li= link_to name, browse_version_path(@version, File.join([params[:path], name].compact))
+
+- elsif GitHub::Markup.can_render? @entry.name
+  - @gem_file.data_file(@path) do |file|
+    %article.content{class: file.language.default_alias_name}
+      = raw GitHub::Markup.render @entry.name, file.read
+
+- else
+  - @gem_file.data_file(@path) do |file|
+    %article.file{class: file.language.default_alias_name}
+      = raw file.colorize
