@@ -1,17 +1,42 @@
 %h1= @version
 
 %p= @version.summary
-= simple_format @version.description
 
-%h2 Dependencies
-%ul
-  - @gem_file.metadata.dependencies.each do |dependency|
-    %li
-      = link_to dependency.name, project_path(dependency.name)
-      = dependency.requirement
+= simple_format @version.description if @version.description
 
-- if @gem_file.metadata.development_dependencies.present?
-  %h2 Development Dependencies
-  %ul
-  - @gem_file.metadata.development_dependencies.each do |dependency|
-    %li= link_to dependency.name, project_path(dependency.name)
+%h2 Bundler
+
+%pre
+  gem #{@version.name.inspect}, #{@gem_file.metadata.version.spermy_recommendation.inspect}
+
+-# %pre~ @gem_file.metadata.to_yaml
+
+.row
+  .span4
+    %h2 Information
+
+    %dl.dl-horizontal
+      %dt Homepage
+      %dd= link_to @gem_file.metadata.homepage
+
+      %dt Email
+      %dd= Array.wrap(@gem_file.metadata.email).map { |email| mail_to email }.to_sentence
+
+      %dt Date
+      %dd= time_tag @gem_file.metadata.date
+
+  - if @gem_file.metadata.dependencies.present?
+    .span4
+      %h2 Dependencies
+      %ul
+        - @gem_file.metadata.dependencies.each do |dependency|
+          %li
+            = link_to dependency.name, project_path(dependency.name)
+            = dependency.requirement
+
+  - if @gem_file.metadata.development_dependencies.present?
+    .span6
+      %h2 Development Dependencies
+      %ul
+      - @gem_file.metadata.development_dependencies.each do |dependency|
+        %li= link_to dependency.name, project_path(dependency.name)
