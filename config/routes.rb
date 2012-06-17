@@ -1,5 +1,5 @@
 RubygemsOrg::Application.routes.draw do
-  root to: "search#new"
+  root to: "home#show"
 
   resources :projects, only: [:show, :index]
 

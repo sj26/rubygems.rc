@@ -1,0 +1,5 @@
+.hero-unit
+  %h1{style: "font-size: 400%; margin-bottom: 15px"} Search Rubygems
+  = form_tag projects_path, method: :get, class: "form-search" do
+    = text_field_tag :search, nil, style: "height: auto; font-size: 23px; width: 70%"
+    = submit_tag "Search", style: "", class: "btn btn-large btn-primary"
