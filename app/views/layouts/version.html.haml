@@ -1,6 +1,6 @@
 = extends "application" do
   %h1{style: "padding-bottom: 0.5em"}
-    = @version.name
+    = link_to @version.name, @version.project
     = @version.version
     = @version.platform unless @version.platform == "ruby"
 
