@@ -23,14 +23,12 @@
       %li= link_to "Raw", raw_version_path(@version, @path)
 
   - @gem_file.data_file(@path) do |file|
-    - if GitHub::Markup.can_render? @entry.name
-      %article.content{class: file.language.try(:default_alias_name)}
-        = raw GitHub::Markup.render @entry.name, file.read
+    %article.content{class: [file.language.try(:type), file.language.try(:default_alias_name)]}
+      - if GitHub::Markup.can_render? @entry.name
+        ~ raw GitHub::Markup.render @entry.name, file.read
 
-    - elsif file.image?
-      %article.image
+      - elsif file.image?
         = image_tag raw_version_path(@version, @path)
 
-    - else
-      %article.file{class: file.language.try(:default_alias_name)}
-        = raw file.colorize
+      - else
+        ~ raw file.colorize
