@@ -3,6 +3,8 @@ class VersionsController < ApplicationController
   before_filter :prepare_gem_file
   before_filter :prepare_entry, only: [:browse, :raw]
 
+  layout "version"
+
   def show
   end
 

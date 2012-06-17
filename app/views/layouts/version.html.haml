@@ -1,0 +1,8 @@
+= extends "application" do
+  %ul.nav.nav-tabs
+    = activated_content_tag :li, version_path(@version), exact: true do
+      = link_to @version, version_path(@version)
+    = activated_content_tag :li, browse_version_path(@version) do
+      = link_to "Browse", browse_version_path(@version)
+
+  = yield
