@@ -1,11 +1,18 @@
 class VersionsController < ApplicationController
   before_filter :prepare_version
-  before_filter :prepare_gem_file, only: :browse
+  before_filter :prepare_gem_file, only: [:browse, :raw]
 
   def show
   end
 
   def browse
+  end
+
+  # TODO: This should be cached.
+  def raw
+    @gem_file.data_file(@path) do |file|
+      send_data file.data, filename: file.name, type: file.content_type, disposition: file.disposition
+    end
   end
 
 protected
