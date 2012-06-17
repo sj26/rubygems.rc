@@ -7,6 +7,10 @@ class Project < ActiveRecord::Base
 
   extend Texticle
 
+  def latest_version
+    versions.first
+  end
+
   # Would prefer using a postgresql type and custom comparison
   # operator, but that rabbit hole's too deep for railscamp.
   def reorder_versions!
