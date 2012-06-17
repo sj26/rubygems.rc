@@ -4,6 +4,11 @@ class Gem::Package::TarReader::Entry
 
   delegate :name, :size, to: :header
 
+  def mode
+    # linguist will mode.to_i(8) this which fails on a fixnum like TarHeader's.
+    header.mode.to_s
+  end
+
   def data
     # XXX This is awful, but it works.
     # We can optimise this into better data structures in GemFile later.
