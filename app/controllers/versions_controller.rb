@@ -1,6 +1,7 @@
 class VersionsController < ApplicationController
   before_filter :prepare_version
-  before_filter :prepare_gem_file, only: [:browse, :raw]
+  before_filter :prepare_gem_file
+  before_filter :prepare_entry, only: [:browse, :raw]
 
   def show
   end
@@ -24,6 +25,9 @@ protected
   def prepare_gem_file
     gem_path = "#{Rails.root}/public/gems/#{params[:id]}.gem"
     @gem_file = GemFile.new gem_path
+  end
+
+  def prepare_entry
     @path = params[:path] || ""
     @entry = @gem_file[@path]
   end
