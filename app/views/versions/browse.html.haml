@@ -4,17 +4,29 @@
     - subpaths_to @path do |component, subpath|
       %li= link_to_unless_current component, browse_version_path(@version, subpath)
 
-- if @entry.is_a? Hash
-  %ul
-    - @entry.each do |name, entry|
-      %li= link_to name, browse_version_path(@version, File.join([params[:path], name].compact))
+- # TODO: These renderings and listings should be cached
 
-- elsif GitHub::Markup.can_render? @entry.name
-  - @gem_file.data_file(@path) do |file|
-    %article.content{class: file.language.default_alias_name}
-      = raw GitHub::Markup.render @entry.name, file.read
+- if @entry.is_a? Hash
+  %table
+    %thead
+      %th Name
+      %th Size
+    %tbody
+      - @entry.each do |name, entry|
+        %tr
+          %td= link_to name, browse_version_path(@version, File.join([params[:path], name].compact))
+          %td= number_to_human_size entry.size if entry.respond_to? :size
 
 - else
   - @gem_file.data_file(@path) do |file|
-    %article.file{class: file.language.default_alias_name}
-      = raw file.colorize
+    - if GitHub::Markup.can_render? @entry.name
+      %article.content{class: file.language.default_alias_name}
+        = raw GitHub::Markup.render @entry.name, file.read
+
+    - elsif file.image?
+      %article.image
+        = image_tag raw_version_path(@version, @path)
+
+    - else
+      %article.file{class: file.language.default_alias_name}
+        = raw file.colorize
