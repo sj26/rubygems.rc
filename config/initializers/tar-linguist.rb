@@ -6,7 +6,7 @@ class Gem::Package::TarReader::Entry
 
   def mode
     # linguist will mode.to_i(8) this which fails on a fixnum like TarHeader's.
-    header.mode.to_s
+    header.mode.to_s(8)
   end
 
   def data
