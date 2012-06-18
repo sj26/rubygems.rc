@@ -10,6 +10,7 @@ namespace :gems do
       version.save!
       puts version
     end
+    Project.find_each(&:reorder_versions!)
   end
 
   task old_import: [:environment] do
