@@ -18,7 +18,7 @@ class Project < ActiveRecord::Base
     end.first.tap do |latest_version|
       self.latest_version = latest_version
       self.summary = latest_version.summary
-      self.description = latest_version.summary
+      self.description = latest_version.description
     end
     save!
   end
