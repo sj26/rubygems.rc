@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RubygemsOrg::Application.load_tasks
+Rubygems::Application.load_tasks

@@ -1,4 +1,4 @@
-RubygemsOrg::Application.routes.draw do
+Rubygems::Application.routes.draw do
   root to: "home#show"
 
   resources :projects, only: [:show, :index]
