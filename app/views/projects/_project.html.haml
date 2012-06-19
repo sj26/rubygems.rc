@@ -1,5 +1,6 @@
 %article[project]
   %h1
     = link_to project, project
-    %span.version{style: "color: #999"} (#{project.latest_version.version})
+    - if project.latest_version
+      %span.version{style: "color: #999"} (#{project.latest_version.version})
   = simple_format project.summary
