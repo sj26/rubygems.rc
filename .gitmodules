@@ -4,3 +4,6 @@
 [submodule "vendor/nestive"]
 	path = vendor/nestive
 	url = https://github.com/sj26/nestive.git
+[submodule "vendor/gem"]
+	path = vendor/gem
+	url = https://github.com/sj26/gem
