@@ -22,7 +22,9 @@
     %tbody
       - @entry.each do |name, entry|
         %tr
-          %td= link_to name, browse_version_path(@version, File.join([params[:path], name].compact))
+          %td
+            = link_to name, browse_version_path(@version, File.join([params[:path], name].compact))
+            = content_tag :span, '/', class: 'divider', style: 'color: #999' if entry.is_a? Hash
           %td= number_to_human_size entry.size if entry.respond_to? :size
 
 - else
