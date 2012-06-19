@@ -6,24 +6,21 @@
 
 %pre gem #{@version.name.inspect}, #{@gem_file.metadata.version.spermy_recommendation.inspect}
 
--# %pre~ @gem_file.metadata.to_yaml
+%h2 Information
+
+%dl.dl-horizontal
+  %dt Homepage
+  %dd= link_to @gem_file.metadata.homepage
+
+  %dt Email
+  %dd= Array.wrap(@gem_file.metadata.email).map { |email| mail_to email }.to_sentence
+
+  %dt Date
+  %dd= time_tag @gem_file.metadata.date
 
 .row
-  .span4
-    %h2 Information
-
-    %dl.dl-horizontal
-      %dt Homepage
-      %dd= link_to @gem_file.metadata.homepage
-
-      %dt Email
-      %dd= Array.wrap(@gem_file.metadata.email).map { |email| mail_to email }.to_sentence
-
-      %dt Date
-      %dd= time_tag @gem_file.metadata.date
-
   - if @gem_file.metadata.dependencies.present?
-    .span4
+    .span6
       %h2 Dependencies
       %ul
         - @gem_file.metadata.dependencies.each do |dependency|
@@ -32,7 +29,7 @@
             = dependency.requirement
 
   - if @gem_file.metadata.development_dependencies.present?
-    .span4
+    .span6
       %h2 Dev Dependencies
       %ul
       - @gem_file.metadata.development_dependencies.each do |dependency|
