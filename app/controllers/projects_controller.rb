@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   def index
-    @projects = Project.includes(:latest_version).order(:name).paginate page: params[:page] || 1
+    @projects = Project.order(:name).paginate page: params[:page] || 1
     @projects = @projects.search params[:search] if search?
   end
 
