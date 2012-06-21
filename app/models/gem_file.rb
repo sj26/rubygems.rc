@@ -37,8 +37,10 @@ class GemFile
   end
 
   def metadata
-    metadata_file do |metadata_file|
-      return Gem::Specification.from_yaml metadata_file
+    @metadata ||= Rails.cache.fetch "GemFile/#{path}/metadata" do
+      metadata_file do |metadata_file|
+        return Gem::Specification.from_yaml metadata_file
+      end
     end
   end
 
@@ -71,14 +73,16 @@ class GemFile
   end
 
   def to_hash
-    @hash ||= {}.tap do |paths|
-      data_tar do |data_tar|
-        data_tar.each do |entry|
-          components = entry.full_name.split('/')
-          components[0...-1].inject(paths) { |paths, component| paths[component] ||= {} }[components.last] = entry.header
+    @hash ||= Rails.cache.fetch "GemFile/#{path}/hash" do
+      {}.tap do |paths|
+        data_tar do |data_tar|
+          data_tar.each do |entry|
+            components = entry.full_name.split('/')
+            components[0...-1].inject(paths) { |paths, component| paths[component] ||= {} }[components.last] = entry.header
+          end
         end
-      end
-    end.freeze
+      end.freeze
+    end
   end
 
   def [] path
