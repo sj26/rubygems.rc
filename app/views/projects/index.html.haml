@@ -2,5 +2,9 @@
   Projects
   - if search?
     matching &ldquo;#{params[:search]}&rdquo;
+- if search? and @project and 
+  %h2 Exact Match
+  = render @project
+  %h2 Other Results
 = render @projects
 = will_paginate @projects
