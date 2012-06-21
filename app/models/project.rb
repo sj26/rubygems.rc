@@ -15,7 +15,7 @@ class Project < ActiveRecord::Base
       [Gem::Version.new(version.version), version.platform]
     end.each.with_index do |version, position|
       version.update_attribute :version_order, position
-    end.first.tap do |latest_version|
+    end.last.tap do |latest_version|
       self.latest_version = latest_version
       self.summary = latest_version.summary
       self.description = latest_version.description
