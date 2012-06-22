@@ -39,5 +39,8 @@
       - elsif file.image?
         = image_tag raw_version_path(@version, @path)
 
+      - elsif file.safe_to_colorize?
+        ~ raw file.colorize options: {linenos: "table", lineanchors: "L", anchorlinenos: true}
+
       - else
-        ~ raw file.colorize
+        %pre~ file.data
