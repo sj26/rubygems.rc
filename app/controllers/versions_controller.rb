@@ -1,6 +1,5 @@
 class VersionsController < ApplicationController
   before_filter :prepare_version
-  before_filter :prepare_gem_file
   before_filter :prepare_entry, only: [:browse, :raw]
 
   layout "version"
@@ -13,7 +12,7 @@ class VersionsController < ApplicationController
 
   # TODO: This should be cached.
   def raw
-    @gem_file.data_file(@path) do |file|
+    @version.file.data_file(@path) do |file|
       send_data file.data, filename: file.name, type: file.content_type, disposition: file.disposition
     end
   end
@@ -28,13 +27,8 @@ protected
     end
   end
 
-  def prepare_gem_file
-    gem_path = "#{Rails.root}/public/gems/#{params[:id]}.gem"
-    @gem_file = GemFile.new gem_path
-  end
-
   def prepare_entry
     @path = params[:path] || ""
-    @entry = @gem_file[@path]
+    @entry = @version.file[@path]
   end
 end

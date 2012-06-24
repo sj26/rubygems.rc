@@ -4,33 +4,33 @@
 
 %h2 Bundler
 
-%pre gem #{@version.name.inspect}, #{@gem_file.metadata.version.spermy_recommendation.inspect}
+%pre gem #{@version.name.inspect}, #{@version.file.metadata.version.spermy_recommendation.inspect}
 
 %h2 Information
 
 %dl.dl-horizontal
   %dt Homepage
-  %dd= link_to @gem_file.metadata.homepage
+  %dd= link_to @version.file.metadata.homepage
 
   %dt Email
-  %dd= Array.wrap(@gem_file.metadata.email).map { |email| mail_to email }.to_sentence
+  %dd= Array.wrap(@version.file.metadata.email).map { |email| mail_to email }.to_sentence
 
   %dt Date
-  %dd= time_tag @gem_file.metadata.date
+  %dd= time_tag @version.file.metadata.date
 
 .row
-  - if @gem_file.metadata.dependencies.present?
+  - if @version.file.metadata.dependencies.present?
     .span6
       %h2 Dependencies
       %ul
-        - @gem_file.metadata.dependencies.each do |dependency|
+        - @version.file.metadata.dependencies.each do |dependency|
           %li
             = link_to dependency.name, project_path(dependency.name)
             = dependency.requirement
 
-  - if @gem_file.metadata.development_dependencies.present?
+  - if @version.file.metadata.development_dependencies.present?
     .span6
       %h2 Dev Dependencies
       %ul
-      - @gem_file.metadata.development_dependencies.each do |dependency|
+      - @version.file.metadata.development_dependencies.each do |dependency|
         %li= link_to dependency.name, project_path(dependency.name)

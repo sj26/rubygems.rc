@@ -31,16 +31,17 @@
   %nav.btn-group.pull-right
     = link_to "Raw", raw_version_path(@version, @path), class: "btn"
 
-  - @gem_file.data_file(@path) do |file|
-    %article.content.clearfix{class: [file.language.try(:type), file.language.try(:default_alias_name)]}
+  - @version.file.data_file(@path) do |file|
+    %article.content.clearfix{class: [file.language.try(:default_alias_name)]}
       - if GitHub::Markup.can_render? @entry.name
-        ~ raw GitHub::Markup.render @entry.name, file.read
+        .markup~ raw GitHub::Markup.render @entry.name, file.read
 
       - elsif file.image?
-        = image_tag raw_version_path(@version, @path)
+        .image= image_tag raw_version_path(@version, @path)
 
       - elsif file.safe_to_colorize?
         ~ raw file.colorize options: {linenos: "table", lineanchors: "L", anchorlinenos: true}
 
       - else
-        %pre~ file.data
+        .raw
+          %pre~ file.data

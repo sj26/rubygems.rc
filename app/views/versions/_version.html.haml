@@ -4,6 +4,7 @@
       %span.version= version.version
       - unless version.platform == "ruby"
         %span.platform= version.platform
+    = time_tag version.created_at
 
     .span3{style: "text-align: right"}
       .btn-group{style: "display: inline-block; vertical-align: middle"}
