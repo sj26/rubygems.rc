@@ -15,10 +15,11 @@
 - # TODO: These renderings and listings should be cached
 
 - if @entry.is_a? Hash
-  %table.table.table-bordered.table-striped.clearfix
+  %table.table.table-bordered.table-striped
     %thead
-      %th Name
-      %th Size
+      %tr
+        %th Name
+        %th Size
     %tbody
       - @entry.each do |name, entry|
         %tr
