@@ -1,6 +1,10 @@
 %h1= @project
-= simple_format @project.summary
-= simple_format @project.description
+
+- unless @project.description.starts_with?(@project.summary)
+  %p.summary= @project.summary
+
+= safe_join(@project.description.split(/\n{2,}/).map { |para| content_tag :p, para }) if @project.description
+
 .row
   .span6
     %h2 Versions
