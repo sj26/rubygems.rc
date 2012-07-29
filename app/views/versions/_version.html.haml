@@ -1,12 +1,12 @@
 %li[version]
-  .row
-    = link_to version, class: "span3" do
-      %span.version= version.version
-      - unless version.platform == "ruby"
-        %span.platform= version.platform
-    = time_tag version.created_at
+  = link_to version do
+    %span.version= version.version
+    - unless version.platform == "ruby"
+      %span.platform= version.platform
+  —
+  = time_tag version.created_at
 
-    .span3{style: "text-align: right"}
-      .btn-group{style: "display: inline-block; vertical-align: middle"}
-        = link_to "Download", version_path(version, format: "gem"), class: "btn btn-mini"
-        = link_to "Browse", browse_version_path(version), class: "btn btn-mini"
+  %div{style: "float: right"}
+    .btn-group{style: "display: inline-block; vertical-align: middle"}
+      = link_to "Download", version_path(version, format: "gem"), class: "btn btn-mini"
+      = link_to "Browse", browse_version_path(version), class: "btn btn-mini"
