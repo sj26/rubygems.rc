@@ -236,14 +236,6 @@ pre, code, kbd
     white-space: pre
     border: none
     background: transparent
-  .highlight pre
-    background-color: #f8f8f8
-    border: 1px solid #ccc
-    font-size: 13px
-    line-height: 19px
-    overflow: auto
-    padding: 6px 10px
-    border-radius: 3px
   pre
     background-color: #f8f8f8
     border: 1px solid #ccc
@@ -252,6 +244,45 @@ pre, code, kbd
     overflow: auto
     padding: 6px 10px
     border-radius: 3px
+    width: 100%
     code, tt
       background-color: transparent
       border: none
+  // Does anybody know how to fix this properly? :-/
+  .highlighttable
+    &, tr, th, td, .highlight, pre
+      border: 0
+      background: none
+      padding: 0
+      margin: 0
+    pre
+      white-space: pre
+    width: 100%
+    max-width: 100%
+    background: #f8f8f8
+    .linenodiv
+      padding: 0.25em 0.5em
+      background: #d9d9d9
+      border: 1px solid #ccc
+      border-right: none
+      border-radius: 3px 0 0 3px
+      pre
+        color: #999
+        a, a:hover, a:active, a:visited
+          color: inherit
+    .highlight
+      padding: 0.25em 0.5em
+      background: #f9f9f9
+      border: 1px solid #ccc
+      border-radius: 0 3px 3px 0
+  .markup
+    padding: 10px
+    background: #fcfcfc
+    border: 1px solid #d9d9d9
+    +border-radius(3px)
+
+    > :first-child
+      margin-top: 0
+
+    > :last-child
+      margin-bottom: 0
