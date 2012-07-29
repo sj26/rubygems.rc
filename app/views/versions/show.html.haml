@@ -13,7 +13,7 @@
   %dd= link_to @version.file.metadata.homepage, @version.file.metadata.homepage
 
   %dt Email
-  %dd= Array.wrap(@version.file.metadata.email).map { |email| mail_to email }.to_sentence
+  %dd= Array.wrap(@version.file.metadata.email).map { |email| mail_to email }.to_sentence.html_safe
 
   %dt Date
   %dd= time_tag @version.file.metadata.date
