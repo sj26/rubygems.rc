@@ -13,7 +13,7 @@ namespace :gems do
   end
 
   desc "Seed gems into database"
-  task seed: [:environment] do
+  task seed: :environment do
     progress = nil
     Marshal.load(Zlib.inflate(File.read('public/Marshal.4.8.Z'))).tap do |specs|
       progress = Gem::ProgressBar.new "Seeding gems", specs.length
@@ -26,9 +26,11 @@ namespace :gems do
       progress.inc
     end
     progress.finish
-    puts "#{specs.length} gems seeded"
+    puts "#{progress.total} gems seeded"
+  end
 
-    # This will go away once we can sematically sort versions in postgresql
+  # This will go away once we can sematically sort versions in postgresql (hence undocumented)
+  task reorder: :environment do
     progress = Gem::ProgressBar.new "Reordering versions", Project.count
     Project.find_each do |project|
       project.reorder_versions!
@@ -36,7 +38,7 @@ namespace :gems do
     end
     progress.finish
   end
-
-  desc "Mirror, index and seed gems"
-  task setup: [:mirror, :index, :seed]
 end
+
+desc "Mirror, index and seed gems"
+task gems: %w(gems:mirror gems:index gems:seed gems:reorder)
