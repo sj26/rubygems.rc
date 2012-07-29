@@ -1,0 +1,8 @@
+<% found_const = false %>
+<% inherited_constant_list do |superclass, consts| %>
+  <% if constant_listing.size == 0 && !found_const %><h3>Constant Summary</h3><% end %>
+  <% found_const = true %>
+  <h4 class="inherited">Constants <%= superclass.type == :class ? 'inherited' : 'included' %>
+     from <%= linkify superclass %></h4>
+  <p class="inherited"><%= consts.map {|c| linkify c }.join(", ") %></p>
+<% end %>

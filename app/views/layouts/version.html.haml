@@ -9,5 +9,7 @@
       = link_to "Information", version_path(@version)
     = activated_content_tag :li, browse_version_path(@version) do
       = link_to "Browse", browse_version_path(@version)
+    = activated_content_tag :li, version_docs_path(@version) do
+      = link_to "Docs", version_docs_path(@version)
 
   = preserve yield

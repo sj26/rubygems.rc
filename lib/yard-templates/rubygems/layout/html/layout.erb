@@ -1,0 +1,25 @@
+<ul class="breadcrumb pull-left">
+  <% if @contents || @file %>
+    <li><a href="<%= url_for_main %>">Documentation</a><span class="divider">/</span></li>
+    <li class="active"><%= @breadcrumb_title %></li>
+  <% elsif object.is_a?(CodeObjects::Base) %>
+    <li><a href="<%= url_for_main %>">Documentation</a><span class="divider">&rsaquo;</span></li>
+    <% @breadcrumb.each do |obj| %>
+      <li><%= linkify(obj, obj.name) %><span class="divider">::</span></li>
+    <% end %>
+    <li class="active"><%= object.root? ? "Top Level Namespace" : object.name(true) %></li>
+  <% else %>
+    <li><a href="<%= url_for_main %>">Documentation</a></li>
+  <% end %>
+</ul>
+
+<div class="btn-group pull-right">
+  <a class="btn index<%= " active" if object == "_index.html" %>" href="<%= url_for_index %>">Index</a>
+  <% menu_lists.each do |field| %>
+    <a class="btn full_list_link" id="<%= field[:type] %>_list_link" href="<%= url_for_list(field[:type]) %>"><%= field[:search_title] %></a>
+  <% end %>
+</div>
+
+<article class="documentation content clearfix">
+  <%= yieldall %>
+</article>

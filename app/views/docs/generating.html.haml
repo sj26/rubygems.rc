@@ -1,0 +1,6 @@
+%h2#generating-docs{data: {status_url: version_docs_status_path(@version)}} Generating
+%p#loading Hold tight, it's coming...
+#fail{style: "display: none"}
+  %p Woops, something went wrong. Wait a while, then #{link_to "try again", version_docs_path(@version)}.
+%noscript
+  %p Wait a while, then #{link_to "try again", version_docs_path(@version)}.

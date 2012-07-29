@@ -17,10 +17,14 @@ gem 'org-ruby'
 gem 'creole'
 gem 'wikicloth'
 
-# Language savant with syntax higlighting
+# Source browsing
 gem 'linguist', path: 'vendor/linguist'
 
-# Asset-online gems
+# Documentation
+gem 'yard'
+gem 'yard-rails'
+
+# Asset-only gems
 group :assets do
   gem 'sass-rails'
   gem 'bootstrap-sass'

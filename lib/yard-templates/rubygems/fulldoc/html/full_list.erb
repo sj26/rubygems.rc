@@ -1,0 +1,16 @@
+<ul class="breadcrumb pull-left">
+  <li><a href="<%= url_for_index %>">Documentation</a><span class="divider">/</span></li>
+  <li><a href="<%= url_for_list(@list_type) %>"><%= @list_title %></a></li>
+</ul>
+
+<div class="btn-group pull-right">
+  <a class="btn index" href="<%= url_for_index %>">Index</a>
+  <% menu_lists.each do |field| %>
+    <a class="btn full_list_link <%= "active" if field[:type] == @list_type %>" id="<%= field[:type] %>_list_link" href="<%= url_for_list(field[:type]) %>"><%= field[:search_title] %></a>
+  <% end %>
+</div>
+
+<h1 id="full_list_header" class="clearfix"><%= @list_title %></h1>
+<ul id="full_list" class="<%= @list_class || @list_type %>">
+  <%= erb "full_list_#{@list_type}" %>
+</ul>

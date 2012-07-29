@@ -1,0 +1,8 @@
+<% groups(attr_listing, "Attribute") do |list, name| %>
+  <h3><%= name %></h3>
+  <ul class="summary">
+    <% list.each do |meth| %>
+      <%= yieldall :item => meth %>
+    <% end %>
+  </ul>
+<% end %>

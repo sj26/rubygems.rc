@@ -19,8 +19,16 @@ class Version < ActiveRecord::Base
     "#{name}-#{version}#{"-#{platform}" unless platform.nil? or platform == "ruby"}"
   end
 
+  def filename
+    "#{Rails.root}/public/gems/#{full_name}.gem"
+  end
+
   def file
-    @file ||= GemFile.new "#{Rails.root}/public/gems/#{full_name}.gem"
+    @file ||= GemFile.new filename
+  end
+
+  def documentation
+    @documentation ||= GemDocumentation.new self
   end
 
   def to_param

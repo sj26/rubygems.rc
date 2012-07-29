@@ -148,6 +148,9 @@ GEM
       builder
       expression_parser
     will_paginate (3.0.3)
+    yard (0.8.2.1)
+    yard-rails (0.2.0)
+      yard
     yui-compressor (0.9.6)
       POpen4 (>= 0.1.4)
 
@@ -174,4 +177,6 @@ DEPENDENCIES
   uglifier
   wikicloth
   will_paginate
+  yard
+  yard-rails
   yui-compressor

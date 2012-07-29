@@ -1,0 +1,15 @@
+<%
+fromobject = object
+fromobject = object.namespace if CodeObjects::Base === fromobject && !fromobject.is_a?(CodeObjects::NamespaceObject)
+frompath = serializer.serialized_path(fromobject)
+source_path = File.relative_path(frompath, "../browse/#{object.file}")
+source_title = object.file
+if object.line
+  source_path += "#L-#{object.line}"
+  source_title += ":#{object.line}"
+end
+%>
+<div class="source">
+  <div class="file"><%= link_url(source_path, source_title) %></div>
+  <%= Pygments.highlight(object.source, lexer: object.source_type || :c, options: {linenos: :table, linenostart: object.line}) %>
+</div>
