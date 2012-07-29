@@ -1,6 +1,7 @@
-%p= @version.summary
+- unless @version.description.starts_with?(@version.summary)
+  %p.summary= @version.summary
 
-= simple_format @version.description if @version.description
+= safe_join(@version.description.split(/\n{2,}/).map { |para| content_tag :p, para }) if @version.description
 
 %h2 Bundler
 
