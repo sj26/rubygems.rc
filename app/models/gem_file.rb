@@ -64,8 +64,7 @@ class GemFile
     data_tar do |data_tar|
       data_tar.each do |entry|
         if entry.full_name == path
-          yield entry
-          return
+          return yield entry
         end
       end
     end
