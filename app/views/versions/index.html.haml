@@ -1,0 +1,12 @@
+%h1{style: "margin-bottom: 0.5em"}
+  Gems
+  - if search?
+    matching &ldquo;#{params[:search]}&rdquo;
+- if search? and @exact_version
+  %h2 Exact Match
+  %ul.versions= render @exact_version
+  %h2 Other Results
+
+%ul.versions= render @versions
+
+= will_paginate @versions

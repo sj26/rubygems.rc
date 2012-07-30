@@ -1,10 +1,24 @@
 class VersionsController < ApplicationController
-  before_filter :prepare_version
+  before_filter :prepare_version, only: [:show, :other, :browse, :raw]
   before_filter :prepare_entry, only: [:browse, :raw]
 
-  layout "version"
+  layout "version", except: :index
+
+  def index
+    @versions = Version.where(version_order: 0)
+    if search?
+      @exact_version = @versions.find_by_name params[:search] if first_page?
+      @versions = @versions.search params[:search]
+    else
+      @versions = @versions.order(:name)
+    end
+    @versions = @versions.paginate page: params[:page] || 1
+  end
 
   def show
+  end
+
+  def other
   end
 
   def browse
@@ -19,11 +33,21 @@ class VersionsController < ApplicationController
 
 protected
 
+  def search?
+    params[:search].present?
+  end
+
+  helper_method :search?
+
+  def first_page?
+    (params[:page] || 1).to_i == 1
+  end
+
   def prepare_version
     @version = Version.find_by_full_name! params[:id]
   rescue ActiveRecord::RecordNotFound
-    if @project = Project.find_by_name(params[:id])
-      redirect_to @project
+    if @version = Version.ordered.not_prerelease.find_by_name(params[:id])
+      redirect_to @version
     end
   end
 

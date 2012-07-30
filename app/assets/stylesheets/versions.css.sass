@@ -1,9 +1,22 @@
+ul.versions
+  margin: 0
+  padding: 0
+  list-style: none
+
 li.version
+  margin: 0
   padding: 0.5em 0
+  list-style: none
   border-bottom: 1px solid #eee
 
-  &:first
+  &:first-of-type
     border-top: 1px solid #eee
 
   &:nth-child(even)
     background: #f9f9f9
+
+  .alternate &
+    &:nth-child(even)
+      background: none
+    &:nth-child(odd)
+      background: #f9f9f9
