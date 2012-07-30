@@ -22,7 +22,7 @@ class Version < ActiveRecord::Base
   end
 
   def self.ordered
-    order("name ASC", "version_order DESC", "created_at DESC")
+    order("name ASC", "version_order ASC", "created_at DESC")
   end
 
   def full_name
@@ -65,7 +65,7 @@ class Version < ActiveRecord::Base
     tap do
       scope.order("name ASC").pluck("DISTINCT name").each do |name|
         transaction do
-          scope.where(name: name).select("id, name, version, platform").sort do |a, b|
+          scope.where(name: name).select("id, name, version, platform").sort do |b, a|
             if a.name != b.name
               a.name <=> b.name
             elsif a.version != b.version
