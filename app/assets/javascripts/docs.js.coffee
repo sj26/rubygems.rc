@@ -17,3 +17,13 @@ $ ->
           $("#fail").show()
       , 2000
     queuePoll()
+
+  $(".documentation").on "click", ".source .title", (e) ->
+    e.preventDefault()
+    $code = $(e.target).parents(".source").find(".highlighttable")
+    if $code.is ":hidden"
+      $code.show()
+      $(e.target).addClass("expanded")
+    else
+      $code.hide()
+      $(e.target).removeClass("expanded")
