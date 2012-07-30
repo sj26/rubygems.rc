@@ -10,7 +10,7 @@ class VersionsController < ApplicationController
       @exact_version = @versions.find_by_name params[:search]
       @versions = @versions.search params[:search]
     else
-      @versions = @versions.order(:name)
+      @versions = @versions.ordered
     end
     @versions = @versions.paginate page: params[:page] || 1
   end
