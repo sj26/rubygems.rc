@@ -4,6 +4,9 @@
     = @version.version
     = @version.platform unless @version.platform == "ruby"
 
+  .pull-right
+    = link_to "Download", version_path(@version, format: "gem"), class: "btn"
+
   %ul.nav.nav-tabs
     = activated_content_tag :li, other_version_path(@version), exact: true do
       = link_to "Versions", other_version_path(@version)
