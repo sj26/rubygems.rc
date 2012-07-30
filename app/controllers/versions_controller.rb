@@ -7,7 +7,7 @@ class VersionsController < ApplicationController
   def index
     @versions = Version.where(version_order: 0)
     if search?
-      @exact_version = @versions.find_by_name params[:search] if first_page?
+      @exact_version = @versions.find_by_name params[:search]
       @versions = @versions.search params[:search]
     else
       @versions = @versions.order(:name)
