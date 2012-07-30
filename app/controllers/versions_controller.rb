@@ -48,6 +48,8 @@ protected
   rescue ActiveRecord::RecordNotFound
     if @version = Version.ordered.not_prerelease.find_by_name(params[:id])
       redirect_to @version
+    else
+      redirect_to versions_path(search: params[:id])
     end
   end
 
