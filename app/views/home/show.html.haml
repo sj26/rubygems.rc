@@ -3,3 +3,13 @@
   = form_tag versions_path, method: :get, class: "form-search" do
     = text_field_tag :search, nil, style: "height: auto; font-size: 23px; width: 70%"
     = submit_tag "Search", style: "", class: "btn btn-large btn-primary"
+%h2 What can I do?
+%p Search for a gem above, or just go ahead and #{link_to "browse", versions_path}, and you can check out dependencies, versions available, browse inside the gem's files just like #{link_to "GitHub", "https://github.com"}, and view documentation just like #{link_to "RubyDoc.info", "http://rubydoc.info"}.
+%h2 Using this as a gem source
+- if request.domain == "rubygems.org"
+  %p We're mirroring the official rubygems for you to use offline. Just use rubygems like normal!
+- else
+  %p This is also a gem hosting service for rubygems and bundler. To install a gem from here:
+  = Pygments.highlight(%{gem install --source #{versions_url.inspect} GEM}, lexer: :sh).html_safe
+  %p Or tell bundler to use this as your gem source in your <tt>Gemfile</tt>:
+  = Pygments.highlight(%{source #{versions_url.inspect}}, lexer: :ruby).html_safe
