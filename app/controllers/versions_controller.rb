@@ -8,6 +8,7 @@ class VersionsController < ApplicationController
     @versions = Version.where(version_order: 0)
     if search?
       @exact_version = @versions.find_by_name params[:search]
+      @versions = @versions.where("id != ?", @exact_version) if @exact_version
       @versions = @versions.search params[:search]
     else
       @versions = @versions.ordered
