@@ -63,9 +63,9 @@ class GemDocumentation
           parser.send :parser_type=, parser.send(:parser_type_for_filename, entry.full_name)
           parser.parse entry
         elsif entry.full_name == readme
-          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
+          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.force_encoding("utf-8"))
         elsif entry.full_name.in? extra_files
-          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
+          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.force_encoding("utf-8"))
         end
       end
     end
