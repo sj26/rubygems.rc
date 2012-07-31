@@ -2,8 +2,8 @@
 class GemDocumentation
   attr_reader :version
 
-  YARD_PATH = "#{Rails.root}/tmp/yard"
-  YARD_PATTERNS = ["lib/**.rb", "ext/**.c"]
+  YARD_PATH = "#{Rails.root}/tmp/yard".freeze
+  YARD_PATTERNS = ["app/**.rb", "lib/**.rb", "ext/**.c"].freeze
 
   YARD::Templates::Engine.template_paths << "#{Rails.root}/lib/yard-templates"
 
@@ -12,6 +12,21 @@ class GemDocumentation
   end
 
   delegate :file, to: :version
+  delegate :metadata, to: :file
+  delegate :extra_rdoc_files, to: :metadata
+  delegate :rdoc_options, to: :metadata
+
+  def rdoc_options_main
+    @rdoc_options_main ||= rdoc_options.present? and
+      (rdoc_options.include? "--main" and
+        rdoc_options[rdoc_options.index("--main") + 1].presence) or
+      (rdoc_options.include? "-m" and
+        rdoc_options[rdoc_options.index("-m") + 1].presence)
+  end
+
+  def readme
+    rdoc_options_main || file.glob("README*").sort_by(&:length).first
+  end
 
   def yard_path
     "#{YARD_PATH}/#{version.full_name}"
@@ -37,6 +52,9 @@ class GemDocumentation
     YARD::Registry.clear
     YARD::Registry.yardoc_file = yard_yardoc_path
     globals = OpenStruct.new
+    extra_files = (extra_rdoc_files - [readme])
+    extra_file_objects = []
+    readme_object = nil
     file.data_tar do |data_tar|
       data_tar.each do |entry|
         if YARD_PATTERNS.any? { |pattern| File.fnmatch(pattern, entry.full_name) }
@@ -44,6 +62,10 @@ class GemDocumentation
           parser.send :file=, entry.full_name
           parser.send :parser_type=, parser.send(:parser_type_for_filename, entry.full_name)
           parser.parse entry
+        elsif entry.full_name == readme
+          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
+        elsif entry.full_name.in? extra_files
+          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
         end
       end
     end
@@ -53,7 +75,9 @@ class GemDocumentation
       basepath: yard_doc_path,
       format: :html,
       globals: globals,
-      files: [],
+      files: extra_file_objects + [readme_object].compact,
+      readme: readme_object,
+      markup: :rdoc,
       serializer: serializer,
       template: :rubygems
     Rails.logger.info "Generated documentation for #{version.inspect}: #{objects.size} objects: #{objects.inspect}"
