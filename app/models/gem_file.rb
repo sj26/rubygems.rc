@@ -23,14 +23,8 @@ class GemFile
   def metadata_file &block
     tar do |tar|
       tar.each do |entry|
-        case entry.full_name
-          when "metadata.gz"
-            gzipped_file entry, &block
-            return
-          when "metadata"
-            yield entry
-            return
-        end
+        return gzipped_file entry, &block if entry.full_name == "metadata.gz"
+        return yield entry if entry.full_name == "metadata"
       end
     end
     raise "metadata file not found"
@@ -39,7 +33,7 @@ class GemFile
   def metadata
     @metadata ||= Rails.cache.fetch "GemFile/#{path}/metadata" do
       metadata_file do |metadata_file|
-        return Gem::Specification.from_yaml metadata_file
+        Gem::Specification.from_yaml metadata_file
       end
     end
   end
@@ -47,8 +41,8 @@ class GemFile
   def data_tar_file &block
     tar do |tar|
       tar.each do |entry|
-        gzipped_file entry, &block if entry.full_name == "data.tar.gz"
-        return
+        return gzipped_file entry, &block if entry.full_name == "data.tar.gz"
+        return block.call(entry) if entry.full_name == "data.tar"
       end
     end
     raise "data file not found"
@@ -71,21 +65,41 @@ class GemFile
     raise "file #{path.inspect} not found"
   end
 
-  def to_hash
-    @hash ||= Rails.cache.fetch "GemFile/#{path}/hash" do
-      {}.tap do |paths|
+  def headers
+    @headers ||= Rails.cache.fetch "GemFile/#{path}/headers" do
+      {}.tap do |hash|
         data_tar do |data_tar|
           data_tar.each do |entry|
-            components = entry.full_name.split('/')
-            components[0...-1].inject(paths) { |paths, component| paths[component] ||= {} }[components.last] = entry.header
+            hash[entry.full_name] = entry.header
           end
         end
       end.freeze
     end
   end
 
+  def paths
+    @paths ||= headers.keys
+  end
+
+  def tree
+    @tree ||= Rails.cache.fetch "GemFile/#{path}/tree" do
+      {}.tap do |hash|
+        headers.each do |path, header|
+          components = path.split('/')
+          components[0...-1].inject(hash) { |hash, component| hash[component] ||= {} }[components.last] = header
+        end
+      end.freeze
+    end
+  end
+
+  alias to_hash tree
+
   def [] path
-    path.split('/').compact.inject(to_hash) { |paths, component| paths[component] }
+    path.split('/').compact.inject(tree) { |paths, component| paths[component] }
+  end
+
+  def glob pattern, flags=0
+    paths.select { |path| File.fnmatch(pattern, path, flags) }
   end
 
 protected
