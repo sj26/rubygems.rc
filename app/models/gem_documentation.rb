@@ -84,6 +84,7 @@ class GemDocumentation
     YARD::Registry.save
   rescue
     Rails.logger.error "Error generating documentation for #{version.inspect}:\n#{$!.class.name}: #{$!}\n#{$!.backtrace.join("\n")}"
+    FileUtils.rm_rf yard_yardoc_path
     File.open(yard_yardoc_path, "w") { |file| file.write "error" }
     raise
   end
