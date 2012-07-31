@@ -2,7 +2,7 @@
 class GemDocumentation
   attr_reader :version
 
-  YARD_PATH = "#{Rails.root}/tmp/yard".freeze
+  YARD_PATH = "#{Rails.root}/tmp/cache/yard".freeze
   YARD_PATTERNS = ["app/**.rb", "lib/**.rb", "ext/**.c"].freeze
 
   YARD::Templates::Engine.template_paths << "#{Rails.root}/lib/yard-templates"
