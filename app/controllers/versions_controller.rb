@@ -40,10 +40,6 @@ protected
 
   helper_method :search?
 
-  def first_page?
-    (params[:page] || 1).to_i == 1
-  end
-
   def prepare_version
     @version = Version.find_by_full_name! params[:id]
   rescue ActiveRecord::RecordNotFound
