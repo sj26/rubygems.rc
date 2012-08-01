@@ -25,7 +25,11 @@ class GemDocumentation
   end
 
   def readme
-    rdoc_options_main || file.glob("README*").sort_by(&:length).first
+    @readme ||= rdoc_options_main || file.glob("README*").sort_by(&:length).first
+  end
+
+  def extra_files
+    @extra_files ||= (extra_rdoc_files - [readme])
   end
 
   def yard_path
@@ -52,7 +56,6 @@ class GemDocumentation
     YARD::Registry.clear
     YARD::Registry.yardoc_file = yard_yardoc_path
     globals = OpenStruct.new
-    extra_files = (extra_rdoc_files - [readme])
     extra_file_objects = []
     readme_object = nil
     file.data_tar do |data_tar|
