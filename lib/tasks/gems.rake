@@ -19,8 +19,10 @@ namespace :gems do
       progress = Gem::ProgressBar.new "Seeding gems", specs.length
     end.each do |full_name, spec|
       version = Version.find_or_create_by_name_and_version_and_platform! spec.name.to_s, spec.version.to_s, spec.platform.to_s
-      version.summary = spec.summary.try(:strip)
-      version.description = spec.description.try(:strip) unless spec.description.try(:strip) == version.summary
+      spec_summary = spec.summary.try(:force_encoding, "utf-8").try(:strip).presence
+      spec_description = spec.description.try(:force_encoding, "utf-8").try(:strip).presence
+      version.summary = spec_summary
+      version.description = spec_description unless spec_description == spec_summary
       version.save!
       progress.inc
     end
