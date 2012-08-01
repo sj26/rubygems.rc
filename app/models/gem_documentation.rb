@@ -25,7 +25,7 @@ class GemDocumentation
   end
 
   def readme
-    @readme ||= rdoc_options_main || file.glob("README*").sort_by(&:length).first
+    @readme ||= rdoc_options_main || file.readme
   end
 
   def extra_files

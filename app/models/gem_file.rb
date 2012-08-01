@@ -102,6 +102,10 @@ class GemFile
     paths.select { |path| File.fnmatch(pattern, path, flags) }
   end
 
+  def readme
+    glob("README*", File::FNM_CASEFOLD).sort_by(&:length).first
+  end
+
 protected
 
   def gzipped_file file, &block
