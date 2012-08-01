@@ -28,6 +28,18 @@
             = content_tag :span, '/', class: 'divider', style: 'color: #999' if entry.is_a? Hash
           %td= number_to_human_size entry.size if entry.respond_to? :size
 
+  - if params[:path].blank? and @version.file.readme
+    - @version.file.data_file(@version.file.readme) do |file|
+      #readme
+        %h2= file.name
+        .content
+          - if GitHub::Markup.can_render? file.name
+            .markup
+              ~ raw GitHub::Markup.render file.name, file.data
+          - else
+            .raw
+              %pre~ file.data
+
 - else
   %nav.btn-group.pull-right
     = link_to "Raw", raw_version_path(@version, @path), class: "btn"
