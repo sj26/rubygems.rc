@@ -65,10 +65,11 @@ class GemDocumentation
           parser.send :file=, entry.full_name
           parser.send :parser_type=, parser.send(:parser_type_for_filename, entry.full_name)
           parser.parse entry
+          # TODO: Check multilingual source code is correclty encoded/parsed.
         elsif entry.full_name == readme
-          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.force_encoding("utf-8"))
+          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.detect_encoding!)
         elsif entry.full_name.in? extra_files
-          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.force_encoding("utf-8"))
+          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.detect_encoding!)
         end
       end
     end
