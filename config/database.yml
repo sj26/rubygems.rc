@@ -1,7 +1,9 @@
 development:
   adapter: postgresql
   database: rubygems_development
+  encoding: utf-8
 
 test:
   adapter: postgresql
   database: rubygems_test
+  encoding: utf-8
