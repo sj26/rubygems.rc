@@ -25,6 +25,11 @@ class Version < ActiveRecord::Base
     order("name ASC", "version_order ASC", "created_at DESC")
   end
 
+  def self.find_using_name name
+    where(name: name).not_prerelease.ordered.first or
+      where(name: name).ordered.first
+  end
+
   def full_name
     "#{name}-#{version}#{"-#{platform}" unless platform.nil? or platform == "ruby"}"
   end
