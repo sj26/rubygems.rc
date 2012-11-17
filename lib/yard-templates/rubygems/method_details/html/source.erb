@@ -9,7 +9,7 @@ if object.line
   source_title += ":#{object.line}"
 end
 %>
-<div class="source">
-  <div class="file"><span class="title"><%= source_title %></span> (<%= link_url(source_path, "browse") %>)</div>
+<details class="source">
+  <summary class="file"><span class="title"><%= source_title %></span> (<%= link_url(source_path, "browse") %>)</div>
   <%= Pygments.highlight(object.source, lexer: object.source_type || :c, options: {linenos: :table, linenostart: object.line}) %>
-</div>
+</details>

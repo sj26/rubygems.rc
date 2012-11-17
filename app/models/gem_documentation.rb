@@ -93,6 +93,7 @@ class GemDocumentation
     raise
   end
 
+  # TODO: Progress?
   def status
     if File.directory? yard_yardoc_path
       :ready

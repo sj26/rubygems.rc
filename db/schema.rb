@@ -11,21 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730084009) do
+ActiveRecord::Schema.define(:version => 20121117025753) do
 
   create_table "versions", :force => true do |t|
     t.string   "version"
     t.string   "platform"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
-    t.integer  "version_order", :default => 0,     :null => false
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.text     "summary"
     t.text     "description"
-    t.string   "name",                             :null => false
-    t.boolean  "prerelease",    :default => false, :null => false
+    t.string   "name",                                            :null => false
+    t.boolean  "prerelease",                   :default => false, :null => false
+    t.string   "version_order", :limit => nil
+    t.string   "full_name",                                       :null => false
+    t.boolean  "latest",                       :default => false, :null => false
   end
 
-  add_index "versions", ["name", "version", "platform"], :name => "index_versions_on_name_and_version_and_platform", :unique => true
-  add_index "versions", ["name", "version_order", "prerelease"], :name => "index_versions_on_name_and_version_order_and_prerelease"
+  add_index "versions", ["full_name"], :name => "index_versions_on_full_name"
+  add_index "versions", ["name", "version_order", "platform"], :name => "index_versions_on_name_and_version_order_and_platform", :unique => true
 
 end

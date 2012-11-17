@@ -1,5 +1,5 @@
 %h2 Versions
 .row
-  - @version.all_versions.ordered.select("id, name, version, platform").in_groups(2, false).each.with_index do |versions, index|
+  - @version.versions.ordered.in_groups(2, false).each.with_index do |versions, index|
     .span6
       %ul.versions{class: (:alternate if index % 2 == 1)}= render versions

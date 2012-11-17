@@ -37,3 +37,5 @@ end
 gem 'jquery-rails'
 gem 'haml-rails'
 gem 'nestive', path: 'vendor/nestive'
+
+gem 'pry-rails'
