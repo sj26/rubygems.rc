@@ -1,4 +1,4 @@
-require 'zlib'
+require "zlib"
 require "#{Rails.root}/vendor/gem/lib/gem/progressbar"
 
 namespace :gems do
@@ -15,7 +15,7 @@ namespace :gems do
   desc "Seed gems into database"
   task seed: :environment do
     progress = nil
-    Marshal.load(Zlib.inflate(File.read(Rails.root.join('public', 'Marshal.4.8.Z')))).tap do |specs|
+    Marshal.load(Zlib.inflate(File.read(Rails.root.join("public", "Marshal.4.8.Z")))).tap do |specs|
       progress = Gem::ProgressBar.new "Seeding gems", specs.length
     end.each do |full_name, spec|
       begin
