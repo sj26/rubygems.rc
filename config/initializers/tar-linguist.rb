@@ -1,3 +1,5 @@
+require "rubygems/package"
+
 # Let us introspect tar entries for their (programming) language
 class Gem::Package::TarReader::Entry
   include Linguist::BlobHelper
