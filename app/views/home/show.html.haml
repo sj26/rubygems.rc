@@ -10,6 +10,8 @@
   %p We're mirroring the official rubygems for you to use offline. Just use rubygems like normal!
 - else
   %p This is also a gem hosting service for rubygems and bundler. To install a gem from here:
-  = Pygments.highlight(%{gem install --source #{versions_url.inspect} GEM}, lexer: :sh).html_safe
-  %p Or tell bundler to use this as your gem source in your <tt>Gemfile</tt>:
-  = Pygments.highlight(%{source #{versions_url.inspect}}, lexer: :ruby).html_safe
+  = raw Pygments.highlight(%{gem install --clear-sources --source #{versions_url.inspect} GEM}, lexer: :sh)
+  %p Or tell bundler to use this as a mirror:
+  = raw Pygments.highlight(%{bundle config --global mirror.https://rubygems.org #{versions_url.inspect}}, lexer: :sh)
+  %p Or add this as the source in your Gemfile:
+  = raw Pygments.highlight(%{source #{versions_url.inspect}}, lexer: :ruby)
