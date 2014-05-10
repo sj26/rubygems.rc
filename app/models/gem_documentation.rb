@@ -67,9 +67,9 @@ class GemDocumentation
           parser.parse entry
           # TODO: Check multilingual source code is correclty encoded/parsed.
         elsif entry.full_name == readme
-          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.detect_encoding!)
+          readme_object = YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
         elsif entry.full_name.in? extra_files
-          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read.detect_encoding!)
+          extra_file_objects << YARD::CodeObjects::ExtraFileObject.new(entry.full_name, entry.read)
         end
       end
     end
